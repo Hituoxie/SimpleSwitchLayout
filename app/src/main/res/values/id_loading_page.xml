@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="loading_pager_success" type="id" />
+    <item name="loading_pager_error" type="id" />
+    <item name="loading_pager_loading" type="id" />
+    <item name="loading_pager_no_data" type="id" />
+    <item name="loading_pager_not_net_work" type="id" />
+</resources>
