@@ -5,8 +5,8 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.LayoutAnimationController;
 import android.widget.FrameLayout;
 
 /**
@@ -50,26 +50,24 @@ public class SimpleSwitchLayout extends FrameLayout {
             View child = getChildAt(i);
             mSwitchViews.put(child.getId(),child);
         }
-        hideAllViews();
     }
 
     /**添加需要切换的子布局
-     * @param id 与childView绑定的key(每个布局标识的int值不一致即可)，如果key存在，替换布局
-     * @param childView 默认INVISIBLE
+     * @param id 与childView绑定的key(每个布局标识的int值不一致即可)
+     * @param childView 默认GONE
      */
     public void setView(int id, View childView){
-        if(childView == null || childView.getParent() != null){
-            throw new RuntimeException("childView can't be null,and must without parent!");
+        if(childView == null){
+            throw new RuntimeException("childView can't be null!");
         }
 
-        View view = mSwitchViews.get(id);
-        if(view != null){
-            removeView(view);
-        }
         mSwitchViews.put(id,childView);
+        addView(childView,childView.getLayoutParams());
+        childView.setVisibility(View.GONE);
+    }
 
-        addView(childView);
-        childView.setVisibility(View.INVISIBLE);
+    public void setView(int id,int layoutId){
+        setView(id, LayoutInflater.from(getContext()).inflate(layoutId,this,false));
     }
 
     /**切换显示的布局
@@ -79,7 +77,7 @@ public class SimpleSwitchLayout extends FrameLayout {
         mCurrentId = id;
         int index  = mSwitchViews.indexOfKey(id);
         for(int i = 0,len = mSwitchViews.size() ; i< len ;i++){
-            mSwitchViews.valueAt(i).setVisibility( index == i ? View.VISIBLE : View.INVISIBLE);
+            mSwitchViews.valueAt(i).setVisibility( index == i ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -88,7 +86,7 @@ public class SimpleSwitchLayout extends FrameLayout {
      */
     public void hideAllViews(){
         for(int i = 0,len = mSwitchViews.size() ; i< len ;i++){
-            mSwitchViews.valueAt(i).setVisibility(View.INVISIBLE);
+            mSwitchViews.valueAt(i).setVisibility(View.GONE);
         }
     }
 
