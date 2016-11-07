@@ -2,6 +2,7 @@ package com.lostls.simpleswitchlayout;
 
 import android.content.Context;
 import android.util.AttributeSet;
+
 /**
  * @author li.zhen
  * @version
@@ -31,51 +32,53 @@ public class LoadingLayout extends SimpleSwitchLayout {
 	}
 
 	@Override
-	protected void initView() {
-		super.initView();
+	protected void onFinishInflate() {
+		super.onFinishInflate();
 		initCommentView();
 	}
 
 	private void initCommentView() {
+		bindView(LOADING,NO_DATA,SUCCESS,ERROR,NOT_NET_WORK);
+
 		//设置默认布局
 		if(getView(LOADING) == null){
-			setView(LOADING,R.layout.loading_pager);
+			addView(LOADING,R.layout.loading_pager);
 		}
 
 		if(getView(NO_DATA) == null){
-			setView(NO_DATA,R.layout.loading_empty_pager);
+			addView(NO_DATA,R.layout.loading_empty_pager);
 		}
 
 		if(getView(ERROR) == null){
-			setView(ERROR,R.layout.loading_error_pager);
+			addView(ERROR,R.layout.loading_error_pager);
 		}
 
 		if(getView(NOT_NET_WORK) == null){
-			setView(NOT_NET_WORK,R.layout.loading_no_network_pager);
+			addView(NOT_NET_WORK,R.layout.loading_no_network_pager);
 		}
 	}
 
 	public void showLoadingView(){
-		switchView(LOADING);
+		showView(LOADING);
 	}
 
 	public void showNotNetWorkView(){
-		switchView(NOT_NET_WORK);
+		showView(NOT_NET_WORK);
 	}
 
 	public void showErrorView(){
-		switchView(ERROR);
+		showView(ERROR);
 	}
 
 	public void showSuccessView(){
 		if(getView(SUCCESS) == null){
 			throw new RuntimeException("must call setSuccessView()!");
 		}
-		switchView(SUCCESS);
+		showView(SUCCESS);
 	}
 
 	public void showNoDataView(){
-		switchView(NO_DATA);
+		showView(NO_DATA);
 	}
-
 }
+

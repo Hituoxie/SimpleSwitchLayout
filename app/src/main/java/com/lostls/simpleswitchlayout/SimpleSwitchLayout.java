@@ -39,16 +39,15 @@ public class SimpleSwitchLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        initView();
-    }
-
-    protected void initView() {
-        for(int i = 0,len = getChildCount(); i< len ; i++){
-            View child = getChildAt(i);
-            mSwitchViews.put(child.getId(),child);
+    /**绑定一组需要切换布局的id
+     * @param id 已经添加的布局id
+     */
+    public void bindView(int ...id){
+        for (int i : id){
+            View view = findViewById(i);
+            if(view != null){
+                mSwitchViews.put(i,findViewById(i));
+            }
         }
     }
 
@@ -56,24 +55,28 @@ public class SimpleSwitchLayout extends FrameLayout {
      * @param id 与childView绑定的key(每个布局标识的int值不一致即可)
      * @param childView 默认GONE
      */
-    public void setView(int id, View childView){
+    public void addView(int id, View childView){
         if(childView == null){
             throw new RuntimeException("childView can't be null!");
         }
 
         mSwitchViews.put(id,childView);
-        addView(childView,childView.getLayoutParams());
+
+        if(childView.getParent() == null){
+            addView(childView);
+        }
+
         childView.setVisibility(View.GONE);
     }
 
-    public void setView(int id,int layoutId){
-        setView(id, LayoutInflater.from(getContext()).inflate(layoutId,this,false));
+    public void addView(int id, int layoutId){
+        addView(id, LayoutInflater.from(getContext()).inflate(layoutId,this,false));
     }
 
-    /**切换显示的布局
+    /**切换显示的布局,绑定的其他布局都隐藏
      * @param id
      */
-    public void switchView(int id){
+    public void showView(int id){
         mCurrentId = id;
         int index  = mSwitchViews.indexOfKey(id);
         for(int i = 0,len = mSwitchViews.size() ; i< len ;i++){
