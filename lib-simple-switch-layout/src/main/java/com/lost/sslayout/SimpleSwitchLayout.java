@@ -1,4 +1,4 @@
-package com.lostls.simpleswitchlayout;
+package com.lost.sslayout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -9,14 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-/**
+/**通过bindView方法来绑定一组需要切换的子布局
  * @author li.zhen
  * @version
  * @類說明 自定义切换布局
  **/
 public class SimpleSwitchLayout extends FrameLayout {
     @SuppressWarnings("unused")
-    private static final String TAG = "SwitchViewLayout";
+    private static final String TAG = "SimpleSwitchLayout";
 
     private int mCurrentId;
 
@@ -39,20 +39,24 @@ public class SimpleSwitchLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    /**绑定一组需要切换布局的id
+    /**绑定一组需要切换子布局的id,该子布局已经添加到SimpleSwitchLayout中
+     * 没有绑定的布局不受SimpleSwitchLayout控制切换
+     * 能灵活的控制布局
      * @param id 已经添加的布局id
      */
     public void bindView(int ...id){
         for (int i : id){
             View view = findViewById(i);
-            if(view != null){
+            if(view == null){
+                throw new IllegalArgumentException("can not bind null view!");
+            }else{
                 mSwitchViews.put(i,findViewById(i));
             }
         }
     }
 
-    /**添加需要切换的子布局
-     * @param id 与childView绑定的key(每个布局标识的int值不一致即可)
+    /**动态添加需要切换的子布局
+     * @param id 与childView绑定的key(不一定要布局id，每个布局标识的int值不一致即可)
      * @param childView 默认GONE
      */
     public void addView(int id, View childView){
@@ -69,6 +73,10 @@ public class SimpleSwitchLayout extends FrameLayout {
         childView.setVisibility(View.GONE);
     }
 
+    /**动态添加需要切换的子布局
+     * @param id
+     * @param layoutId
+     */
     public void addView(int id, int layoutId){
         addView(id, LayoutInflater.from(getContext()).inflate(layoutId,this,false));
     }
@@ -85,11 +93,11 @@ public class SimpleSwitchLayout extends FrameLayout {
     }
 
     /**
-     * 隐藏所有布局
+     * 隐藏所有绑定的布局
      */
     public void hideAllViews(){
         for(int i = 0,len = mSwitchViews.size() ; i< len ;i++){
-            mSwitchViews.valueAt(i).setVisibility(View.GONE);
+            mSwitchViews.valueAt(i).setVisibility(View.VISIBLE);
         }
     }
 
@@ -109,14 +117,6 @@ public class SimpleSwitchLayout extends FrameLayout {
 
     public View getView(int id){
         return mSwitchViews.get(id);
-    }
-
-    /**是否包含布局
-     * @param id
-     * @return
-     */
-    public boolean containView(int id){
-        return getView(id) != null;
     }
 
 }

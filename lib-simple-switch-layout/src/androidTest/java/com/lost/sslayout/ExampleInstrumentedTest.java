@@ -1,4 +1,4 @@
-package com.lostls.simpleswitchlayout;
+package com.lost.sslayout;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.lostls.simpleswitchlayout", appContext.getPackageName());
+        assertEquals("com.lost.sslayout.test", appContext.getPackageName());
     }
 }

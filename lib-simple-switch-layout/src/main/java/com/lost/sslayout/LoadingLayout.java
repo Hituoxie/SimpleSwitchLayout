@@ -1,4 +1,4 @@
-package com.lostls.simpleswitchlayout;
+package com.lost.sslayout;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SimpleSwitchLayout.iml" filepath="$PROJECT_DIR$/SimpleSwitchLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-simple-switch-layout/lib-simple-switch-layout.iml" filepath="$PROJECT_DIR$/lib-simple-switch-layout/lib-simple-switch-layout.iml" />
     </modules>
   </component>
 </project>

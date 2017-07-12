@@ -1,4 +1,4 @@
-package com.lostls.simpleswitchlayout;
+package com.lost.sslayout;
 
 import org.junit.Test;
 
